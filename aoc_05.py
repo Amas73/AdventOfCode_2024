@@ -10,6 +10,7 @@ tot1 = 0
 tot2 = 0
 
 updates = []
+incorrectUpdates = []
 for row in produce:
     correct = True
     for y, x in enumerate(row[:-1]):
@@ -17,9 +18,15 @@ for row in produce:
             correct = False
     if correct:
         updates.append(row)
+    else:
+        incorrectUpdates.append(row)
 
 for row in updates:
     tot1 += row[len(row)//2]
 
 print (f"Day 05 part 1 value is: {tot1}")
+
+for row in incorrectUpdates:
+    
+
 print (f"Day 05 part 2 value is: {tot2}")
