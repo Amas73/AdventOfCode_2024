@@ -26,7 +26,23 @@ for row in updates:
 
 print (f"Day 05 part 1 value is: {tot1}")
 
+correctedUpdates = []
 for row in incorrectUpdates:
-    
+    orderedRow = []
+    while len(row) > 0:
+        testValue = row.pop(0)
+        notFound = True
+        for x in row:
+            if [testValue, x] not in rules:
+                row.append(testValue)
+                notFound = False
+                break
+        if notFound:
+            orderedRow.append(testValue)
+    correctedUpdates.append(orderedRow)
+
+for row in correctedUpdates:
+    tot2 += row[len(row)//2]
+
 
 print (f"Day 05 part 2 value is: {tot2}")
