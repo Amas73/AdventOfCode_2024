@@ -2,7 +2,7 @@ from pygame import Vector2
 from copy import copy
 
 fn = open('2024\\input_06_test.txt','r')
-fn = open('2024\\input_06.txt','r')
+#fn = open('2024\\input_06.txt','r')
 
 data = [r.strip('\n') for r in fn.readlines()] 
 
@@ -19,12 +19,13 @@ for y,row in enumerate(data):
             dir = dir.rotate(90*guardChars.index(char))
             break
 
-prevPos = copy(start)
+loopBlockers = []
+currentPos = copy(start)
 walkedPath = data[:]
 while True:
-    newPos = prevPos + dir
+    newPos = currentPos + dir
     if newPos.x <0 or newPos.y <0 or newPos.x >= len(walkedPath[0]) or newPos.y >= len(walkedPath):
-        walkedPath[int(prevPos.y)] = walkedPath[int(prevPos.y)][:int(prevPos.x)] + "X" + walkedPath[int(prevPos.y)][int(prevPos.x)+1:]
+        walkedPath[int(currentPos.y)] = walkedPath[int(currentPos.y)][:int(currentPos.x)] + "X" + walkedPath[int(currentPos.y)][int(currentPos.x)+1:]
         break
     if walkedPath[int(newPos.y)][int(newPos.x)] == "#":
         dir = dir.rotate(90)
@@ -40,15 +41,17 @@ while True:
                 proposedLoop = False
                 break
         if proposedLoop:
-            tot2 += 1        
-        walkedPath[int(prevPos.y)] = walkedPath[int(prevPos.y)][:int(prevPos.x)] + "X" + walkedPath[int(prevPos.y)][int(prevPos.x)+1:]
-        prevPos = newPos
+            tot2 += 1
+            loopBlockers.append(newPos)       
+        walkedPath[int(currentPos.y)] = walkedPath[int(currentPos.y)][:int(currentPos.x)] + "X" + walkedPath[int(currentPos.y)][int(currentPos.x)+1:]
+        currentPos = newPos
     
 for row in walkedPath:
     tot1 += row.count("X")
     
 print (f"Day 06 part 1 value is: {tot1}")
 
-
+# for pt in loopBlockers:
+#     print(pt)
 
 print (f"Day 06 part 2 value is: {tot2}")
