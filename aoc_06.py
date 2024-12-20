@@ -15,7 +15,7 @@ dir = Vector2(0,-1)
 for y,row in enumerate(data):
     for char in guardChars:
         if char in row:
-            start = (row.index(char),y)
+            start = Vector2(row.index(char),y)
             dir = dir.rotate(90*guardChars.index(char))
             break
 
@@ -24,16 +24,28 @@ walkedPath = data[:]
 while True:
     newPos = prevPos + dir
     if newPos.x <0 or newPos.y <0 or newPos.x >= len(walkedPath[0]) or newPos.y >= len(walkedPath):
+        walkedPath[int(prevPos.y)] = walkedPath[int(prevPos.y)][:int(prevPos.x)] + "X" + walkedPath[int(prevPos.y)][int(prevPos.x)+1:]
         break
     if walkedPath[int(newPos.y)][int(newPos.x)] == "#":
         dir = dir.rotate(90)
     else:
-        walkedPath[int(newPos.y)] = walkedPath[int(newPos.y)][:int(newPos.x)] + "X" + walkedPath[int(newPos.y)][int(newPos.x)+1:]
+        checkDir = dir.rotate(90)
+        proposedLoop = True
+        proposedPath = newPos
+        while True:
+            proposedPath = proposedPath + checkDir
+            if walkedPath[int(proposedPath.y)][int(proposedPath.x)] == "#":
+                break
+            elif walkedPath[int(proposedPath.y)][int(proposedPath.x)] != "X" or proposedPath.x <0 or proposedPath.y <0 or proposedPath.x >= len(walkedPath[0]) or proposedPath.y >= len(walkedPath):
+                proposedLoop = False
+                break
+        if proposedLoop:
+            tot2 += 1        
+        walkedPath[int(prevPos.y)] = walkedPath[int(prevPos.y)][:int(prevPos.x)] + "X" + walkedPath[int(prevPos.y)][int(prevPos.x)+1:]
         prevPos = newPos
     
 for row in walkedPath:
     tot1 += row.count("X")
-    print(row)
     
 print (f"Day 06 part 1 value is: {tot1}")
 
