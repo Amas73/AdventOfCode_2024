@@ -31,7 +31,7 @@ for n in nodes.values():
 
 tot1 = len(antiNodes)
 
-print (f"Day 07 part 1 value is: {tot1}")
+print (f"Day 08 part 1 value is: {tot1}")
 
 antiNodes = []
 for n in nodes.values():
@@ -51,4 +51,4 @@ for n in nodes.values():
 
 tot2 = len(antiNodes)
 
-print (f"Day 07 part 2 value is: {tot2}")
+print (f"Day 08 part 2 value is: {tot2}")
