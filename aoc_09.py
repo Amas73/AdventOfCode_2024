@@ -20,10 +20,11 @@ for v in data:
     dataType = 'file'
 
 compactStorage = []
+lstIdx = len(storage) - 1
 for idx,val in enumerate(storage):
   if type(val) == str:
-    while type(id:=storage.pop()) == str:
-      pass
+    while type(id:=storage[lstIdx]) == str:
+      lstIdx -= 1
     compactStorage.append(id)
   else:
     compactStorage.append(val)
