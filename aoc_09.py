@@ -19,22 +19,19 @@ for v in data:
       storage.append('')
     dataType = 'file'
 
-print (storage)
 compactStorage = []
 idx = 0
-lstIdx = len(storage) - 1
 while idx < len(storage):
   val = storage[idx]
   if type(val) == str:
     while type(id:=storage.pop()) == str:
-      lstIdx -= 1
+      pass
     compactStorage.append(id)
-    lstIdx -= 1
   else:
     compactStorage.append(val)
   idx += 1
 
-print (compactStorage)
+#print (compactStorage)
 for idx,id in enumerate(compactStorage):
   tot1 += idx * id
 
