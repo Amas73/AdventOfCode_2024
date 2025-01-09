@@ -31,5 +31,5 @@ for n in config:
     if buttonA < 100 and buttonB < 100:
         tot1 += (buttonA * 3) + buttonB
 
-print (f"Day 01 part 1 value is: {tot1}")
-print (f"Day 01 part 1 value is: {tot2}")
+print (f"Day 13 part 1 value is: {tot1}")
+print (f"Day 13 part 2 value is: {tot2}")
