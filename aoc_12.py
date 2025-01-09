@@ -12,10 +12,6 @@ regions = []
 directions = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 counted = [[[] for x in range(w)] for y in range(h)]
 
-def printGrid(g):
-  for a in g:
-    print(a)
-
 def safeCheck(grid, x,y,value):
   if x >= 0 and x < w and y >= 0 and y < h:
     return grid[y][x] == value
