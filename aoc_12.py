@@ -8,7 +8,6 @@ h = len(data)
 tot1 = 0
 tot2 = 0
 
-fields = []
 regions = []
 directions = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 counted = [[[] for x in range(w)] for y in range(h)]
