@@ -1,5 +1,5 @@
 fn = open('2024\\input_12_test.txt','r')
-#fn = open('2024\\input_12.txt','r')
+fn = open('2024\\input_12.txt','r')
 
 data = [r.strip('\n') for r in fn.readlines()]
 w = len(data[0])
@@ -10,9 +10,17 @@ tot2 = 0
 
 fields = []
 regions = []
-directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-emptyGrid = [[0 for x in range(w+2)] for y in range(h+2)]
+directions = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 counted = [[[] for x in range(w)] for y in range(h)]
+
+def printGrid(g):
+  for a in g:
+    print(a)
+
+def safeCheck(grid, x,y,value):
+  if x >= 0 and x < w and y >= 0 and y < h:
+    return grid[y][x] == value
+  return False
 
 def travel(grid, x, y, currType):
   global region
@@ -20,25 +28,42 @@ def travel(grid, x, y, currType):
     return
   if (x < 0 or x >= w or y < 0 or y >= h or grid[y][x] != currType):
     region[1] +=1
-    region[2][y+1][x+1] = 1
     return
   region[0] += 1
   counted[y][x].append(currType)
+ 
+  ### Identify corners for part 2
+  if (x == 0 or not safeCheck(grid, x-1, y, currType)) and (y == 0 or not safeCheck(grid, x, y-1, currType)):  ## top left
+    region[2] += 1
+  if (x == w-1 or not safeCheck(grid, x+1, y, currType)) and (y == 0 or not safeCheck(grid, x, y-1, currType)):  ## top right
+    region[2] += 1
+  if (x == 0 or not safeCheck(grid, x-1, y, currType)) and (y == h or not safeCheck(grid, x, y+1, currType)):  ## bottom left
+    region[2] += 1
+  if (x == w-1 or not safeCheck(grid, x+1, y, currType)) and (y == h or not safeCheck(grid, x, y+1, currType)):  ## bottom right
+    region[2] += 1
+  if (x >= 0 and y >= 0 and x < w and y < h) and (not safeCheck(grid, x-1, y-1, currType) and safeCheck(grid, x, y-1, currType) and safeCheck(grid, x-1, y, currType)):   ## inside top left
+    region[2] +=1
+  if (x >= 0 and y >= 0 and x < w and y < h) and (not safeCheck(grid, x+1, y-1, currType) and safeCheck(grid, x, y-1, currType) and safeCheck(grid, x+1, y, currType)):   ## inside top right
+    region[2] +=1
+  if (x >= 0 and y >= 0 and x < w and y < h) and (not safeCheck(grid, x-1, y+1, currType) and safeCheck(grid, x, y+1, currType) and safeCheck(grid, x-1, y, currType)):   ## inside bottom left
+    region[2] +=1
+  if (x >= 0 and y >= 0 and x < w and y < h) and (not safeCheck(grid, x+1, y+1, currType) and safeCheck(grid, x, y+1, currType) and safeCheck(grid, x+1, y, currType)):   ## inside bottom right
+    region[2] +=1
+ 
   for dx, dy in directions:
     travel(grid, x + dx, y + dy, currType)
   return region
 
-for y, row in enumerate(data[:1]):
+for y, row in enumerate(data):
   for x, plant in enumerate(row):
-    region = [0,0,emptyGrid[:]]
+    dirChr = '*'
+    region = [0,0,0]
     if not counted[y][x]:
       regions.append(travel(data, x, y, plant))
 
-for x,y,grid in regions[:1]:
+for x,y,z in regions:
     tot1 += x*y
-    for a in grid:
-      print(a)
-
+    tot2 += x*z
 
 print (f"Day 10 part 1 value is: {tot1}")
 
