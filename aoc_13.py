@@ -28,7 +28,7 @@ for n in config:
     buttonB = ((Ay * Px) - (Ax * Py)) // ((Ay * Bx) - (Ax * By))
     buttonA = (Px - (Bx * buttonB)) // Ax
 
-    if buttonA < 100 and buttonB < 100:
+    if buttonA > 0 and buttonA < 100 and buttonB >0 and buttonB < 100 and buttonA == int(buttonA) and buttonB == int(buttonB):
         tot1 += (buttonA * 3) + buttonB
 
 print (f"Day 13 part 1 value is: {tot1}")
